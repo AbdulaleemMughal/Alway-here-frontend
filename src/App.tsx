@@ -1,38 +1,40 @@
+import { Toaster } from "react-hot-toast";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import { Main } from "./pages/Main";
-import { Login } from "./pages/Login";
-import { About } from "./pages/About";
-import { Design } from "./pages/Design";
-import { Contact } from "./pages/Contact";
-import { Home } from "./pages/Home";
-import { MemorialSite } from "./pages/MemorialSite";
-import { WriteObituary } from "./pages/WriteObituary";
-import { DealingGrief } from "./pages/Dealinggrief";
-import { MemorialFlower } from "./pages/MemorialFlower";
-import { FAQ } from "./pages/FAQ";
-import { Signup } from "./pages/Signup";
-import { ForgetPassword } from "./pages/ForgetPassword";
+import { AppRouter } from "./router/appRouter";
+import { useAuth } from "./hook/useAuth";
+import { useEffect } from "react";
+import { getTokenFromLocalStorage } from "./utils/auth";
+import { useDispatch } from "react-redux";
+import { removeUser } from "./store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { getLoggedInUser } = useAuth();
+
+  useEffect(() => {
+    (async () => {
+      const token = getTokenFromLocalStorage();
+      if (token) {
+        await getLoggedInUser().then(() => {
+          navigate("/account");
+        });
+      } else {
+        dispatch(removeUser());
+      }
+    })();
+  }, []);
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Main />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="about" element={<About />} />
-          <Route path="design" element={<Design />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="memorialsite" element={<MemorialSite />} />
-          <Route path="write-obituary" element={<WriteObituary />} />
-          <Route path="dealing-grief" element={<DealingGrief />} />
-          <Route path="memorial-flowers" element={<MemorialFlower />} />
-          <Route path="faq" element={<FAQ />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="forget-password" element={<ForgetPassword />} />
-        </Route>
-      </Routes>
+      <AppRouter />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
     </>
   );
 }

@@ -3,6 +3,8 @@ import Logo from "../assets/logo.jpg";
 import { Link } from "react-router-dom";
 import { Button } from "../UI/Button";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/appStore";
 
 const navItems = [
   {
@@ -30,6 +32,7 @@ const navItems = [
 
 export const Header = () => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const isLoggedInUser = useSelector((store: RootState) => store.user.user);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,21 +58,37 @@ export const Header = () => {
         </div>
         <div>
           <ul className="flex items-center gap-1 max-lg:hidden">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  to={item.path}
-                  key={item.id}
-                  className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
-                >
-                  {Icon && <Icon size={18} />}
-                  <li key={item.id} className="text-[16px] ">
-                    {item.name}
-                  </li>
-                </Link>
-              );
-            })}
+            {!isLoggedInUser
+              ? navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      to={item.path}
+                      key={item.id}
+                      className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
+                    >
+                      {Icon && <Icon size={18} />}
+                      <li key={item.id} className="text-[16px] ">
+                        {item.name}
+                      </li>
+                    </Link>
+                  );
+                })
+              : navItems.slice(0, 3).map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      to={item.path}
+                      key={item.id}
+                      className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
+                    >
+                      {Icon && <Icon size={18} />}
+                      <li key={item.id} className="text-[16px] ">
+                        {item.name}
+                      </li>
+                    </Link>
+                  );
+                })}
             <Button text="Get Started" className="ml-7.5" onClick={() => {}} />
           </ul>
           <span
