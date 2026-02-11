@@ -36,6 +36,7 @@ export const Login = () => {
             Login
           </h1>
           <Input
+            type="email"
             placeholder="Enter Email"
             value={userData.email}
             onChange={(e) => handleUserValue("email", e.target.value)}

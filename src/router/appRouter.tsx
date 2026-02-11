@@ -1,4 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/appStore";
+
 import { Main } from "../pages/Main";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
@@ -13,12 +16,19 @@ import { FAQ } from "../pages/FAQ";
 import { Signup } from "../pages/Signup";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { Account } from "../pages/Account";
-import { useSelector } from "react-redux";
-import type { RootState } from "../store/appStore";
+import { UpdateProfile } from "../pages/UpdateProfile";
 
-export const AppRouter = () => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isLoggedInUser = useSelector((store: RootState) => store.user.user);
 
+  if (isLoggedInUser === null) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Main />}>
@@ -36,7 +46,19 @@ export const AppRouter = () => {
         <Route path="forget-password" element={<ForgetPassword />} />
         <Route
           path="account"
-          element={!isLoggedInUser ? <Navigate to="/login" /> : <Account />}
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="update_profile"
+          element={
+            <ProtectedRoute>
+              <UpdateProfile />
+            </ProtectedRoute>
+          }
         />
       </Route>
     </Routes>

@@ -1,7 +1,8 @@
 import type { ChangeEvent } from "react";
 
 interface InputProps {
-  type?: string;
+  id?: string;
+  type?: "email" | "text" | "password";
   placeholder?: string;
   className?: string;
   value: string;
@@ -9,6 +10,7 @@ interface InputProps {
 }
 
 export const Input = ({
+  id,
   type = "text",
   placeholder,
   className,
@@ -17,6 +19,7 @@ export const Input = ({
 }: InputProps) => {
   return (
     <input
+    id={id}
       type={type}
       placeholder={placeholder}
       className={`px-5 py-2.5 bg-[#f2f2f2] w-full rounded-lg mb-5 outline-none text-[16px] ${className}`}

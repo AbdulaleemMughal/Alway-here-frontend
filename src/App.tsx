@@ -4,27 +4,34 @@ import { AppRouter } from "./router/appRouter";
 import { useAuth } from "./hook/useAuth";
 import { useEffect } from "react";
 import { getTokenFromLocalStorage } from "./utils/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "./store/authSlice";
-import { useNavigate } from "react-router-dom";
+import type { RootState } from "./store/appStore";
+import { Loader } from "lucide-react";
 
 function App() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { getLoggedInUser } = useAuth();
+  const isLoading = useSelector((store: RootState) => store.user.isLoading);
 
   useEffect(() => {
     (async () => {
       const token = getTokenFromLocalStorage();
       if (token) {
-        await getLoggedInUser().then(() => {
-          navigate("/account");
-        });
+        await getLoggedInUser();
       } else {
         dispatch(removeUser());
       }
     })();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader size={60} className="animate-spin" color="#7454a9" />
+      </div>
+    );
+  }
 
   return (
     <>

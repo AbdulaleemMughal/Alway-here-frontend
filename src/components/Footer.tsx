@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import type { RootState } from "../store/appStore";
 
 const data = [
   {
@@ -77,31 +79,63 @@ const data = [
 ];
 
 export const Footer = () => {
+  const isLoggedInUser = useSelector((store: RootState) => store.user.user);
+
   return (
     <footer className="bg-(--primary-color) py-20 px-56.75 max-2xl:px-40 max-xl:px-30 max-lg:px-10 max-sm:px-6">
       <div className="grid grid-cols-12 pb-10 border-b border-purple-400">
-        {data.map((section) => {
-          return (
-            <div className="col-span-4 max-lg:col-span-6 max-sm:col-span-12 max-lg:mt-5" key={section.id}>
-              <div className="mb-6.25">
-                <h1 className="mb-3 text-[24px] text-(--footer-text) font-[Poppins]">
-                  {section.title}
-                </h1>
-                <div className="h-0.5 w-12.5 bg-purple-400"></div>
-              </div>
-              <ul className="flex flex-col">
-                {section.childrens.map((item) => (
-                  <li
-                    key={item.id}
-                    className="mb-3.5 font-light text-[16px] font-[Poppins] text-(--footer-text)"
-                  >
-                    <Link to={item.path}>{item.text}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
+        {isLoggedInUser === null
+          ? data.map((section) => {
+              return (
+                <div
+                  className="col-span-4 max-lg:col-span-6 max-sm:col-span-12 max-lg:mt-5"
+                  key={section.id}
+                >
+                  <div className="mb-6.25">
+                    <h1 className="mb-3 text-[24px] text-(--footer-text) font-[Poppins]">
+                      {section.title}
+                    </h1>
+                    <div className="h-0.5 w-12.5 bg-purple-400"></div>
+                  </div>
+                  <ul className="flex flex-col">
+                    {section.childrens.map((item) => (
+                      <li
+                        key={item.id}
+                        className="mb-3.5 font-light text-[16px] font-[Poppins] text-(--footer-text)"
+                      >
+                        <Link to={item.path}>{item.text}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })
+          : data.slice(0, 2).map((section) => {
+              return (
+                <div
+                  className="col-span-4 max-lg:col-span-6 max-sm:col-span-12 max-lg:mt-5"
+                  key={section.id}
+                >
+                  <div className="mb-6.25">
+                    <h1 className="mb-3 text-[24px] text-(--footer-text) font-[Poppins]">
+                      {section.title}
+                    </h1>
+                    <div className="h-0.5 w-12.5 bg-purple-400"></div>
+                  </div>
+                  <ul className="flex flex-col">
+                    {section.childrens.map((item) => (
+                      <li
+                        key={item.id}
+                        className="mb-3.5 font-light text-[16px] font-[Poppins] text-(--footer-text)"
+                      >
+                        <Link to={item.path}>{item.text}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+        {}
       </div>
       <div className="flex items-center justify-between mt-10">
         <p className="font-[Poppins] text-[16px] text-(--footer-text)">
