@@ -10,19 +10,32 @@ export const Signup = () => {
   const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserType>({} as UserType);
+  const [userData, setUserData] = useState<UserType>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleDataChange = (field: keyof UserType, value: string) => {
     setUserData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSignUp = async (e: React.SubmitEvent) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    await signIn(userData).finally(() => {
+
+    try {
+      await signIn(userData);
+      setUserData({
+        name: "",
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
       setLoading(false);
-      setUserData({} as UserType);
-    });
+    }
   };
 
   return (
@@ -74,7 +87,6 @@ export const Signup = () => {
             disable={loading}
             text="Register"
             className="w-full rounded-lg"
-            onClick={() => handleSignUp}
           />
           <Link
             to={"/login"}

@@ -10,11 +10,13 @@ import { addUser, removeUser } from "../store/authSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
+type LoginUserType = Omit<UserType, "name">;
+
 export const useAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logIn = async (data: UserType) => {
+  const logIn = async (data: LoginUserType) => {
     try {
       const response = await axiosInstance.post("/auth/logIn", data);
       saveTokenToLocalStorage(response.data.token);
@@ -23,8 +25,9 @@ export const useAuth = () => {
       navigate("/account");
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        toast.error(err.message);
+        toast.error(err.response?.data.message);
       }
+      throw err;
     }
   };
 
@@ -34,7 +37,7 @@ export const useAuth = () => {
       dispatch(addUser(response.data.user));
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        toast.error(err.message);
+        toast.error(err.response?.data.message);
         dispatch(removeUser());
         navigate("/");
       }
@@ -43,13 +46,13 @@ export const useAuth = () => {
 
   const logOut = async () => {
     try {
-      await axiosInstance.post("/auth/logOut");
-      toast.success("Logout Successfull");
+      const response = await axiosInstance.post("/auth/logOut");
+      toast.success(response.data.message);
       removeTokenFromLocalStorage();
       dispatch(removeUser());
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        toast.error(err.message);
+        toast.error(err.response?.data.message);
       }
     }
   };
@@ -63,8 +66,9 @@ export const useAuth = () => {
       navigate("/account");
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        toast.error(err.message);
+        toast.error(err.response?.data.message);
       }
+      throw err;
     }
   };
 

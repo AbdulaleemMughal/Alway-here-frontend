@@ -6,23 +6,35 @@ import { Input } from "../UI/Input";
 import type { UserType } from "../@types/user.type";
 import { useAuth } from "../hook/useAuth";
 
+type LoginUserType = Omit<UserType, "name">;
+
 export const Login = () => {
   const { logIn } = useAuth();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserType>({} as UserType);
+  const [userData, setUserData] = useState<LoginUserType>({
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleUserValue = (field: keyof UserType, value: string) => {
     setUserData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleLogin = async (e: React.SubmitEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    await logIn(userData).finally(() => {
+    try {
+      await logIn(userData);
+      setUserData({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
-      setUserData({} as UserType);
-    });
+    }
   };
 
   return (

@@ -77,7 +77,7 @@ const Card = ({ data }: CardProps) => {
   return (
     <>
       {data.id % 2 !== 0 ? (
-        <div className="mt-10 grid grid-cols-12 gap-10 items-center">
+        <div className="mt-10 grid grid-cols-12 gap-10 items-center max-lg:gap-0">
           <div className="col-span-6 flex flex-col items-start max-lg:col-span-12">
             <span className="mb-3 bg-(--primary-color) p-4 rounded-full flex items-center justify-center">
               <Icon color="white" />
@@ -89,7 +89,7 @@ const Card = ({ data }: CardProps) => {
               {data.desc}
             </p>
           </div>
-          <div className="col-span-6 max-lg:col-span-12">
+          <div className="col-span-6 max-lg:col-span-12 max-lg:mt-5">
             <img
               src={data.image}
               className="w-full h-full object-cover rounded-lg"
@@ -97,8 +97,8 @@ const Card = ({ data }: CardProps) => {
           </div>
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-12 gap-10 items-center">
-          <div className="col-span-6 max-lg:col-span-12 max-lg:order-2">
+        <div className="mt-10 grid grid-cols-12 gap-10 items-center max-lg:gap-0">
+          <div className="col-span-6 max-lg:w-full max-lg:col-span-12 max-lg:mt-5 max-lg:order-2">
             <img
               src={data.image}
               className="w-full h-full object-cover rounded-lg"

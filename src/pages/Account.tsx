@@ -10,8 +10,8 @@ export const Account = () => {
 
   return (
     <>
-      <div className="p-17 flex flex-col items-center">
-        <h1 className="mb-2 font-[Spectral] text-(--primary-color) tracking-wide font-medium text-[40px]">
+      <div className="p-17 flex flex-col items-center max-md:px-6 max-md:py-10">
+        <h1 className="mb-2 font-[Spectral] text-(--primary-color) tracking-wide font-medium text-[40px] max-lg:text-[28px]">
           Welcome {loggedInUser?.name}!
         </h1>
         <div className="w-17.5 h-0.5 bg-(--primary-color)"></div>
@@ -19,7 +19,7 @@ export const Account = () => {
           <h5 className="mb-2 text-(--primary-color) text-[20px] font-medium">
             Create Your first memorial Page
           </h5>
-          <p className="text-center text-[16px] text-(--secondary-color) mb-4">
+          <p className="text-center text-[16px] text-(--secondary-color) mb-4 max-lg:text-[14px]">
             Pick a design and start customizing your Memorial website. <br />
             <br /> You can customize your page details, your text, colors,
             images, etc. <br />

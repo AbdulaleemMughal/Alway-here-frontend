@@ -1,15 +1,10 @@
 import { ChevronDown } from "lucide-react";
-
-type FAQType = {
-  id: number;
-  question: string;
-  answer: string;
-};
+import type { FaqType } from "../@types/faq.type";
 
 interface AccordianProps {
-  faq: FAQType;
-  open: number | null;
-  toggleId: (id: number) => void;
+  faq: FaqType;
+  open: string | null;
+  toggleId: (id: string) => void;
 }
 
 export const Accordian = ({ faq, open, toggleId }: AccordianProps) => {
@@ -17,7 +12,7 @@ export const Accordian = ({ faq, open, toggleId }: AccordianProps) => {
     <div className="border-b border-gray-300">
       <div
         className="flex justify-between items-center py-5 cursor-pointer"
-        onClick={() => toggleId(faq.id)}
+        onClick={() => toggleId(faq._id)}
       >
         <h3 className="text-[22px] max-sm:text-[18px] font-[Spectral] text-(--primary-color) font-light">
           {faq.question}
@@ -27,11 +22,11 @@ export const Accordian = ({ faq, open, toggleId }: AccordianProps) => {
             size={30}
             strokeWidth={1.5}
             color="gray"
-            className={`${open === faq.id ? "rotate-180" : ""} transition-transform duration-300`}
+            className={`${open === faq._id ? "rotate-180" : ""} transition-transform duration-300`}
           />
         </span>
       </div>
-      {faq.id === open && (
+      {faq._id === open && (
         <div className="pb-5">
           <p className="text-[14px] font-[Poppins] text-(--secondary-color)">
             {faq.answer}
