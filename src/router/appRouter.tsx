@@ -17,6 +17,7 @@ import { Signup } from "../pages/Signup";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { Account } from "../pages/Account";
 import { UpdateProfile } from "../pages/UpdateProfile";
+import { Memorial } from "../pages/Memorial";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isLoggedInUser = useSelector((store: RootState) => store.user.user);
@@ -61,6 +62,16 @@ export const AppRouter = () => {
           }
         />
       </Route>
+      <Route
+        path="memorial/:id"
+        element={
+          <ProtectedRoute>
+            <Memorial />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };
+
+// 66a889a66f3cf51ca1be87dd

@@ -141,11 +141,11 @@ export const Footer = () => {
         <p className="font-[Poppins] text-[16px] text-(--footer-text)">
           © 2024 - Andres Group
         </p>
-        <p className="font-[Poppins] text-[16px] text-(--footer-text) flex items-center gap-2">
+        <div className="font-[Poppins] text-[16px] text-(--footer-text) flex items-center gap-2">
           Terms of Use{" "}
           <div className="bg-purple-400 w-1.5 h-1.5 rounded-full"></div>
           Privacy Policy
-        </p>
+        </div>
       </div>
     </footer>
   );

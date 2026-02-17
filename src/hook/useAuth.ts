@@ -50,6 +50,7 @@ export const useAuth = () => {
       toast.success(response.data.message);
       removeTokenFromLocalStorage();
       dispatch(removeUser());
+      navigate("/login");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast.error(err.response?.data.message);

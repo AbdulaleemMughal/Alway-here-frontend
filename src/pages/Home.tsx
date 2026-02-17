@@ -3,6 +3,7 @@ import { Button } from "../UI/Button";
 import type { CardType } from "../@types/Card.type";
 import { HowItWork } from "../shared/HowItWork";
 import { WhyUseAlway } from "../shared/WhyUseAlway";
+import { useNavigate } from "react-router-dom";
 
 const qualityItems = [
   {
@@ -32,6 +33,9 @@ const qualityItems = [
 ];
 
 export const Home = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="py-20 px-10 flex items-center justify-center gap-20 bg-[#f2f2f2] max-sm:px-6">
@@ -49,7 +53,7 @@ export const Home = () => {
             invite <br />
             friends and family to share their memories.
           </p>
-          <Button text="Get Started" className="mt-5" onClick={() => {}} />
+          <Button text="Get Started" className="mt-5" onClick={() => navigate('/design')} />
         </div>
       </div>
       <div className="my-10 mx-56.75 px-10 max-sm:px-6 max-2xl:mx-40 max-xl:mx-30 max-lg:mx-10 max-md:mx-0">

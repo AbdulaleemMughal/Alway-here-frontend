@@ -31,7 +31,7 @@ export const UserDropdown = ({ name }: { name: string }) => {
 
   return (
     <div
-      className="relative ml-7.5 flex items-center gap-1.5 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
+      className="relative ml-7.5 flex items-center gap-1.5 font-medium text-gray-600 font-[Poppins] cursor-pointer py-1 max-xl:ml-4"
       onClick={() => setShowDropdown(!showDropdown)}
     >
       <UserRound size={18} />

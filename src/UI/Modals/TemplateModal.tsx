@@ -1,5 +1,9 @@
 import { Modal, Box } from "@mui/material";
-import { Palette, X } from "lucide-react";
+import { Loader2, Palette, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTheme } from "../../hook/useTheme";
+import type { ThemeType } from "../../@types/theme.type";
+import { ThemeCard } from "../../components/ThemeCard";
 
 const style = {
   position: "absolute",
@@ -8,11 +12,12 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "90%",
   maxWidth: 1200,
-  maxHeight: "90vh",
+  // maxHeight: "90vh",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: 2,
   outline: "none",
+  overflowY: "auto",
 };
 
 interface TemplateModalProps {
@@ -21,6 +26,29 @@ interface TemplateModalProps {
 }
 
 export const TemplateModal = ({ open, setOpen }: TemplateModalProps) => {
+  const { getTheme } = useTheme();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [themes, setThemes] = useState<ThemeType[]>([]);
+
+  useEffect(() => {
+    const fetchThemes = async () => {
+      if (!open) return;
+
+      try {
+        setLoading(true);
+        const data = await getTheme();
+        setThemes(data ?? []);
+      } catch (err) {
+        console.error(err);
+        setThemes([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchThemes();
+  }, [open]);
+
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -47,6 +75,20 @@ export const TemplateModal = ({ open, setOpen }: TemplateModalProps) => {
               change this anytime later.
             </p>
             <div className="h-0.5 w-30 bg-gray-300"></div>
+            {loading ? (
+              <div className="my-6 flex justify-center items-center flex-col">
+                <Loader2 color="#7454a9" className="animate-spin" size={35} />
+                <p className="text-[#7454a9] font-[Poppins] font-medium text-[18px]">
+                  Fetching Themes
+                </p>
+              </div>
+            ) : (
+              <div className="mt-10 grid grid-cols-12 gap-5">
+                {themes.map((theme) => {
+                  return <ThemeCard key={theme._id} data={theme} />;
+                })}
+              </div>
+            )}
           </div>
         </Box>
       </Modal>

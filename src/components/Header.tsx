@@ -49,7 +49,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 bg-white px-60 py-3.5 flex items-center justify-between shadow-sm max-2xl:px-20 max-xl:px-10 max-sm:px-6">
+      <header className="sticky top-0 bg-white px-60 py-3.5 flex items-center justify-between shadow-sm z-9999 max-2xl:px-20 max-xl:px-10 max-sm:px-6">
         <div>
           <Link to="/">
             <img
