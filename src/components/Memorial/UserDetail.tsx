@@ -27,19 +27,19 @@ export const UserDetail = () => {
               type="text"
               value="Hello"
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {}}
+              onChange={(e) => {console.log(e.target.value)}}
             />
             <Input
               type="text"
               value="Hello"
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {}}
+              onChange={(e) => {console.log(e.target.value)}}
             />
             <Input
               type="text"
               value="Hello"
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {}}
+              onChange={(e) => {console.log(e.target.value)}}
             />
           </div>
           <div className="flex items-center gap-2 mt-4 max-sm:w-full max-sm:flex-col">
