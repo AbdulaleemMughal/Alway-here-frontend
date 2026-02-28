@@ -1,0 +1,14 @@
+/* Horizontal Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 4px; /* horizontal scrollbar height */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #a07ae2; /* Blue color */
+  border-radius: 10px;
+}

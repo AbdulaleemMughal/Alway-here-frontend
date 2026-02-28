@@ -49,7 +49,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 bg-white px-60 py-3.5 flex items-center justify-between shadow-sm z-9999 max-2xl:px-20 max-xl:px-10 max-sm:px-6">
+      <header className="sticky top-0 bg-white px-60 py-3.5 flex items-center justify-between shadow-lg z-9999 max-2xl:px-20 max-xl:px-10 max-sm:px-6">
         <div>
           <Link to="/">
             <img
@@ -63,55 +63,6 @@ export const Header = () => {
           <ul className="flex items-center gap-1 max-lg:hidden">
             {!loggedInUser
               ? navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    to={item.path}
-                    key={item.id}
-                    className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
-                  >
-                    {Icon && <Icon size={18} />}
-                    <li className="text-[16px] ">{item.name}</li>
-                  </Link>
-                );
-              })
-              : navItems.slice(0, 3).map((item) => {
-                const Icon = item.icon;
-                return (
-                  <>
-                    <Link
-                      to={item.path}
-                      key={item.id}
-                      className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
-                    >
-                      {Icon && <Icon size={18} />}
-                      <li className="text-[16px] ">{item.name}</li>
-                    </Link>
-                  </>
-                );
-              })}
-            {loggedInUser && <UserDropdown name={loggedInUser.name} />}
-            <Button text="Get Started" className="ml-7.5" onClick={() => setOpenModal(true)} />
-          </ul>
-          <span
-            className="hidden max-lg:block"
-            onClick={() => setShowDropdown(!showDropdown)}
-          >
-            <Menu className="text-(--secondary-color)" size={30} />
-          </span>
-        </div>
-      </header>
-      {showDropdown && (
-        <div
-          className={`sticky top-16 bg-white overflow-hidden shadow-md transition-all duration-300 ease-in-out ${showDropdown
-              ? "max-h-96 opacity-100 translate-y-0"
-              : "max-h-0 opacity-0 -translate-y-2"
-            }`}
-        >
-          <div className="py-5 flex flex-col items-center">
-            <ul className="flex flex-col items-center">
-              {!loggedInUser
-                ? navItems.map((item) => {
                   const Icon = item.icon;
                   return (
                     <Link
@@ -124,27 +75,79 @@ export const Header = () => {
                     </Link>
                   );
                 })
-                : navItems.slice(0, 3).map((item) => {
+              : navItems.slice(0, 3).map((item) => {
                   const Icon = item.icon;
                   return (
-                    <>
+                    <Link
+                      to={item.path}
+                      key={item.id}
+                      className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
+                    >
+                      {Icon && <Icon size={18} />}
+                      <li className="text-[16px] ">{item.name}</li>
+                    </Link>
+                  );
+                })}
+            {loggedInUser && <UserDropdown name={loggedInUser.name} />}
+            <Button
+              text="Get Started"
+              className="ml-7.5"
+              onClick={() => setOpenModal(true)}
+            />
+          </ul>
+          <span
+            className="hidden max-lg:block"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            <Menu className="text-(--secondary-color)" size={30} />
+          </span>
+        </div>
+      </header>
+      {showDropdown && (
+        <div
+          className={`sticky top-16 bg-white overflow-hidden shadow-md transition-all duration-300 ease-in-out ${
+            showDropdown
+              ? "max-h-96 opacity-100 translate-y-0"
+              : "max-h-0 opacity-0 -translate-y-2"
+          }`}
+        >
+          <div className="py-5 flex flex-col items-center">
+            <ul className="flex flex-col items-center">
+              {!loggedInUser
+                ? navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
                       <Link
                         to={item.path}
                         key={item.id}
                         className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
                       >
                         {Icon && <Icon size={18} />}
-                        <li className="text-[16px] py-2">{item.name}</li>
+                        <li className="text-[16px] ">{item.name}</li>
                       </Link>
-                    </>
-                  );
-                })}
+                    );
+                  })
+                : navItems.slice(0, 3).map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <>
+                        <Link
+                          to={item.path}
+                          key={item.id}
+                          className="ml-7.5 flex items-center gap-2 font-medium text-gray-600 font-[Poppins] cursor-pointer hover:border-b-2 hover:border-(var(--primary-color)) py-1 max-xl:ml-4"
+                        >
+                          {Icon && <Icon size={18} />}
+                          <li className="text-[16px] py-2">{item.name}</li>
+                        </Link>
+                      </>
+                    );
+                  })}
             </ul>
             {loggedInUser && <UserDropdown name={loggedInUser.name} />}
             <Button
               text="Get Started"
               className="mt-2 w-1/2 max-sm:w-2/3"
-              onClick={() => { }}
+              onClick={() => {}}
             />
           </div>
         </div>

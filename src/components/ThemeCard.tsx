@@ -17,6 +17,7 @@ export const ThemeCard = ({ data }: ThemeCardProps) => {
     if (!isUserLoggedIn) {
       alert("Please Login to continue");
       navigate("/login");
+      return;
     }
 
     const keywordToSendInApi = keyword.split(",")[0].trim();
@@ -24,7 +25,9 @@ export const ThemeCard = ({ data }: ThemeCardProps) => {
     const response = await axiosInstance.post(
       `/api/add-memorial/${keywordToSendInApi}`,
     );
-    navigate(`/memorial/${response.data.data._id}`);
+
+    const url = `${window.location.origin}/memorial/${response.data.data._id}`;
+    window.open(url, "_blank");
   };
 
   return (

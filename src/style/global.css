@@ -3,4 +3,6 @@
   --secondary-color: rgb(115, 115, 115);
   --footer-text: rgb(255, 255, 255);
   --background-color: #f2f2f2;
+  --input-border-color: #a6a6a65c;
+  --shadow-sm: rgba(0, 0, 0, 0.16) 0px 1px 4px 0px
 }

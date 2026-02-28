@@ -18,6 +18,8 @@ import { ForgetPassword } from "../pages/ForgetPassword";
 import { Account } from "../pages/Account";
 import { UpdateProfile } from "../pages/UpdateProfile";
 import { Memorial } from "../pages/Memorial";
+import { Dashboard } from "../pages/Dashboard";
+import { LivePage } from "../pages/LivePage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isLoggedInUser = useSelector((store: RootState) => store.user.user);
@@ -61,9 +63,25 @@ export const AppRouter = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="dashboard/:memorialId"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Route>
       <Route
-        path="memorial/:id"
+        path="live/:memorialId"
+        element={
+          <ProtectedRoute>
+            <LivePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="memorial/:memorialId"
         element={
           <ProtectedRoute>
             <Memorial />
