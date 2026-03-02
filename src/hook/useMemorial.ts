@@ -1,11 +1,16 @@
 import axios from "axios";
 import { axiosInstance } from "../utils/axiosInstance";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { addMemorial } from "../store/memorialSlice";
 
 export const useMemorial = () => {
+  const dispatch = useDispatch();
+
   const getMemorialById = async (id: string) => {
     try {
       const response = await axiosInstance.get(`/api/memorial/${id}`);
+      dispatch(addMemorial(response.data.data));
       return response.data.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {

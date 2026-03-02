@@ -10,6 +10,7 @@ import "../../style/dashboard.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import type { MemorialType } from "../../@types/memorial.type";
 import { useMemorial } from "../../hook/useMemorial";
+import { handleScroll } from "../../utils/pageScroll";
 
 interface HeaderProps {
   memorialData: MemorialType;
@@ -20,10 +21,7 @@ export const Header = ({ memorialData }: HeaderProps) => {
   const navigate = useNavigate();
   const { deleteMemorial } = useMemorial();
 
-  const handleScroll = (id: string) => {
-    const section = document.getElementById(id);
-    section?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  
 
   const handleDeletePage = async () => {
     if (memorialId) {
@@ -80,7 +78,7 @@ export const Header = ({ memorialData }: HeaderProps) => {
           </div>
         </Link>
         <Link
-          to={`/live/${memorialData._id}`}
+          to={`/live/${memorialData?._id}`}
           target="_blank"
           className="flex items-center gap-3 cursor-pointer shrink-0"
         >

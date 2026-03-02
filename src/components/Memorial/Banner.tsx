@@ -3,8 +3,13 @@ import { Button } from "../../UI/Memorial/Button";
 import { useState } from "react";
 import { PageSettingDrawer } from "../../UI/Memorial/PageSettingDrawer";
 import { useNavigate, useParams } from "react-router-dom";
+import type { MemorialType } from "../../@types/memorial.type";
 
-export const Banner = () => {
+interface BannerProps {
+  data: MemorialType;
+}
+
+export const Banner = ({ data }: BannerProps) => {
   const navigate = useNavigate();
   const { memorialId } = useParams();
   const [openDrawer, setOpenDrawer] = useState<boolean>(true);
@@ -14,7 +19,7 @@ export const Banner = () => {
       <div className="relative h-100 w-full max-lg:h-60">
         <img
           className="h-full w-full object-cover "
-          src="https://alwayshere.fra1.digitaloceanspaces.com/admin_alwayshere--1722321451631_rose-6799477_1920.jpg"
+          src={data?.userDetail?.coverImage}
         />
         <div className="absolute p-5 top-0 left-0 w-full h-full flex flex-col justify-between items-start max-lg:flex-row">
           <div className="flex items-center gap-5">

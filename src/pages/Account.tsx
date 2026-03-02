@@ -67,7 +67,7 @@ export const Account = () => {
         >
           {allMemorials.map((memorial) => {
             return (
-              <MemorialCard data={memorial} onDelete={handleDeleteMemorial} />
+              <MemorialCard key={memorial._id} data={memorial} onDelete={handleDeleteMemorial} />
             );
           })}
         </div>
