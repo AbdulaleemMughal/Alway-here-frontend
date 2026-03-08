@@ -3,6 +3,8 @@ import { ChevronDown, Pipette, SquareArrowOutUpRight, X } from "lucide-react";
 import { useState } from "react";
 import { colors } from "../../utils/colorArray";
 import { Button } from "./Button";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/appStore";
 
 const PageColor = () => {
   return (
@@ -107,6 +109,9 @@ export const PageSettingDrawer = ({
   setOpen,
 }: PageSettingDrawerProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const pageColor = useSelector(
+    (store: RootState) => store.memorial.accentColor,
+  );
 
   return (
     <Drawer open={open} anchor="left" onClose={() => setOpen(false)}>
@@ -117,7 +122,10 @@ export const PageSettingDrawer = ({
               <h1 className="font-[Spectral] text-[24px] mb-2.5 tracking-tight">
                 Page Configurations
               </h1>
-              <div className="w-15 h-0.5 bg-black"></div>
+              <div
+                className="w-15 h-0.5"
+                style={{ backgroundColor: pageColor }}
+              ></div>
             </div>
             <span className="cursor-pointer" onClick={() => setOpen(false)}>
               <X color="gray" size={28} />

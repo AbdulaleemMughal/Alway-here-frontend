@@ -60,12 +60,13 @@ export const Header = () => {
   );
 
   return (
-    <div className="shadow-(--shadow-lg)">
+    <div className="shadow-(--shadow-lg) top-0">
       <div className="mx-auto py-3 max-w-6xl flex items-center justify-between overflow-x-auto whitespace-nowrap flex-nowrap">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
             <div
+            key={item.id}
               onClick={() => handleScroll(item.path)}
               className="py-2.5 px-3.75 flex items-center gap-2 cursor-pointer"
             >

@@ -12,7 +12,6 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "90%",
   maxWidth: 1200,
-  // maxHeight: "90vh",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: 2,

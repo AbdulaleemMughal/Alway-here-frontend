@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { MemorialType } from "../@types/memorial.type";
 import { Loader } from "lucide-react";
 import { Header } from "../components/Memorial/Header";
+import { Video } from "../components/Memorial/Video";
 
 export const Memorial = () => {
   const { getMemorialById } = useMemorial();
@@ -47,6 +48,11 @@ export const Memorial = () => {
       </div>
       <div>
         <Header />
+      </div>
+      <div className="mx-auto max-w-6xl max-lg:px-5">
+        <section id="#videos">
+          <Video />
+        </section>
       </div>
     </div>
   );
