@@ -45,6 +45,8 @@ export const useFavourite = () => {
           `/api/update-favourite/${memorialId}/${favId}`,
           data,
         );
+        toast.success(response.data.message);
+        return response.data.data;
       } catch (err) {
         if (axios.isAxiosError(err)) {
           toast.error(err.response?.data.message);

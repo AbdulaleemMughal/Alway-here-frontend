@@ -1,7 +1,7 @@
 import { Box, Modal } from "@mui/material";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/appStore";
-import { StethoscopeIcon, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "../Memorial/Button";
 import type React from "react";
 import type { FavouriteType } from "../../@types/favourite.type";

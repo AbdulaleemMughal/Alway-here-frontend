@@ -6,7 +6,7 @@ const initialState: MemorialType = {
   accentColor: "",
   backgroundColor: "",
   textColor: "",
-  fontWeigth: "",
+  fontWeight: "",
   isActive: false,
   _id: "",
   userDetail: {
