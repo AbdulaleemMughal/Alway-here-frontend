@@ -1,12 +1,26 @@
 import { Box, Collapse, Drawer } from "@mui/material";
 import { ChevronDown, Pipette, SquareArrowOutUpRight, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { colors } from "../../utils/colorArray";
 import { Button } from "./Button";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/appStore";
+import { useMemorial } from "../../hook/useMemorial";
+import type { MemorialType } from "../../@types/memorial.type";
+import { useClickOutside } from "../../hook/useClickOutside";
 
 const PageColor = () => {
+  const colorRef = useRef<HTMLInputElement>(null);
+  const { updateMemorial } = useMemorial();
+
+  const handlePageColor = async (color: string) => {
+    try {
+      await updateMemorial({ accentColor: color } as MemorialType);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex items-center flex-wrap">
       {colors.map((color) => {
@@ -15,17 +29,49 @@ const PageColor = () => {
             key={color}
             className="w-7.5 h-7.5 rounded-full m-1 cursor-pointer"
             style={{ backgroundColor: color }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePageColor(color);
+            }}
           ></div>
         );
       })}
-      <div className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer">
-        <Pipette color="white" size={18} />
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer"
+      >
+        <Pipette
+          color="white"
+          size={18}
+          onClick={() => {
+            if (colorRef.current) {
+              colorRef.current?.click();
+            }
+          }}
+        />
+        <input
+          ref={colorRef}
+          type="color"
+          className="hidden"
+          onChange={(e) => handlePageColor(e.target.value)}
+        />
       </div>
     </div>
   );
 };
 
 const BackgroundColor = () => {
+  const colorRef = useRef<HTMLInputElement>(null);
+  const { updateMemorial } = useMemorial();
+
+  const handleBgColor = async (color: string) => {
+    try {
+      await updateMemorial({ backgroundColor: color } as MemorialType);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex items-center flex-wrap">
       {colors.map((color) => {
@@ -34,17 +80,49 @@ const BackgroundColor = () => {
             key={color}
             className="w-7.5 h-7.5 rounded-full m-1 cursor-pointer"
             style={{ backgroundColor: color }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleBgColor(color);
+            }}
           ></div>
         );
       })}
-      <div className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer">
-        <Pipette color="white" size={18} />
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer"
+      >
+        <Pipette
+          color="white"
+          size={18}
+          onClick={() => {
+            if (colorRef.current) {
+              colorRef.current?.click();
+            }
+          }}
+        />
+        <input
+          ref={colorRef}
+          type="color"
+          className="hidden"
+          onChange={(e) => handleBgColor(e.target.value)}
+        />
       </div>
     </div>
   );
 };
 
 const TextColor = () => {
+  const colorRef = useRef<HTMLInputElement>(null);
+  const { updateMemorial } = useMemorial();
+
+  const handleTextColor = async (color: string) => {
+    try {
+      await updateMemorial({ textColor: color } as MemorialType);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex items-center flex-wrap">
       {colors.map((color) => {
@@ -53,21 +131,63 @@ const TextColor = () => {
             key={color}
             className="w-7.5 h-7.5 rounded-full m-1 cursor-pointer"
             style={{ backgroundColor: color }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleTextColor(color);
+            }}
           ></div>
         );
       })}
-      <div className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer">
-        <Pipette color="white" size={18} />
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-7.5 h-7.5 flex items-center justify-center bg-black rounded-full m-1 cursor-pointer"
+      >
+        <Pipette
+          color="white"
+          size={18}
+          onClick={() => {
+            if (colorRef.current) {
+              colorRef.current?.click();
+            }
+          }}
+        />
+        <input
+          ref={colorRef}
+          type="color"
+          className="hidden"
+          onChange={(e) => handleTextColor(e.target.value)}
+        />
       </div>
     </div>
   );
 };
 
 const FontWeight = () => {
+  const { updateMemorial } = useMemorial();
+
+  const handleFontSize = async (weight: string) => {
+    try {
+      await updateMemorial({ fontWeight: weight } as MemorialType);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="flex items-center gap-5">
-      <Button text="Light" className="px-5" onClick={() => {}} />
-      <Button text="Bold" className="px-5" onClick={() => {}} />
+    <div
+      className="flex items-center gap-5"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Button
+        text="Light"
+        className="px-5"
+        onClick={() => handleFontSize("light")}
+      />
+      <Button
+        text="Bold"
+        className="px-5"
+        onClick={() => handleFontSize("bold")}
+      />
     </div>
   );
 };
@@ -108,10 +228,13 @@ export const PageSettingDrawer = ({
   open,
   setOpen,
 }: PageSettingDrawerProps) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const pageColor = useSelector(
     (store: RootState) => store.memorial.accentColor,
   );
+
+  useClickOutside(dropdownRef, () => setOpenIndex(null));
 
   return (
     <Drawer open={open} anchor="left" onClose={() => setOpen(false)}>
@@ -136,6 +259,7 @@ export const PageSettingDrawer = ({
               const Component = setting.component;
               return (
                 <div
+                  ref={dropdownRef}
                   key={setting.id}
                   className="border-b border-gray-300"
                   onClick={() =>

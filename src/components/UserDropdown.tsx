@@ -1,11 +1,15 @@
 import { ChevronDown, UserRound } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hook/useAuth";
+import { useClickOutside } from "../hook/useClickOutside";
 
 export const UserDropdown = ({ name }: { name: string }) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const { logOut } = useAuth();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+
+  useClickOutside(dropdownRef, () => setShowDropdown(false));
 
   const handleLogout = async () => {
     await logOut();
@@ -31,6 +35,7 @@ export const UserDropdown = ({ name }: { name: string }) => {
 
   return (
     <div
+      ref={dropdownRef}
       className="relative ml-7.5 flex items-center gap-1.5 font-medium text-gray-600 font-[Poppins] cursor-pointer py-1 max-xl:ml-4"
       onClick={() => setShowDropdown(!showDropdown)}
     >

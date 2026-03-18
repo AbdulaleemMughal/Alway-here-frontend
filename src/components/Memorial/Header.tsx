@@ -56,7 +56,7 @@ export const Header = () => {
   );
   const textColor = useSelector((store: RootState) => store.memorial.textColor);
   const fontWeight = useSelector(
-    (store: RootState) => store.memorial.fontWeigth,
+    (store: RootState) => store.memorial.fontWeight,
   );
 
   return (
@@ -66,7 +66,7 @@ export const Header = () => {
           const Icon = item.icon;
           return (
             <div
-            key={item.id}
+              key={item.id}
               onClick={() => handleScroll(item.path)}
               className="py-2.5 px-3.75 flex items-center gap-2 cursor-pointer"
             >

@@ -1,12 +1,25 @@
 import { Tooltip } from "@mui/material";
 import { Flag, Info, Lock, Star } from "lucide-react";
 import type { MemorialType } from "../../@types/memorial.type";
+import { useMemorial } from "../../hook/useMemorial";
 
 interface MemorialDetailProps {
   memorialData: MemorialType;
 }
 
 export const MemorialDetail = ({ memorialData }: MemorialDetailProps) => {
+  const { updateMemorial } = useMemorial();
+
+  const handleStatus = async (value: string) => {
+    const statusisActive = value === "active" ? true : false;
+
+    try {
+      await updateMemorial({ isActive: statusisActive } as MemorialType);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section id="dashboard" className="py-12 px-5 bg-[#f9fafb]">
       <div className="mx-auto max-w-7xl flex justify-around items-center max-lg:flex-col max-lg:gap-10">
@@ -25,6 +38,7 @@ export const MemorialDetail = ({ memorialData }: MemorialDetailProps) => {
             <div className="flex items-center gap-3">
               <h3 className="font-[Spectral] text-[20px] text-(--secondary-color)">
                 {memorialData.userDetail?.firstName}{" "}
+                {memorialData.userDetail?.middleName}{" "}
                 {memorialData.userDetail?.lastName}
               </h3>
               <Tooltip
@@ -61,9 +75,15 @@ export const MemorialDetail = ({ memorialData }: MemorialDetailProps) => {
               <Flag size={18} strokeWidth={1.5} />
               <p className="text-[20px] font-[Spectral] font-medium">Status:</p>
             </div>
-            <select className="py-1.5 px-3 bg-white rounded-sm border border-gray-300 outline-none">
-              <option>Active (memorial page is active)</option>
-              <option>Closed (memorial page is inactive)</option>
+            <select
+              defaultValue={memorialData.isActive ? "active" : "inActive"}
+              onChange={(e) => handleStatus(e.target.value)}
+              className="py-1.5 px-3 bg-white rounded-sm border border-gray-300 outline-none"
+            >
+              <option value="active">Active (memorial page is active)</option>
+              <option value="inActive">
+                Closed (memorial page is inactive)
+              </option>
             </select>
           </div>
         </div>

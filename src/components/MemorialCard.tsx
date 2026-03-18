@@ -76,9 +76,10 @@ export const MemorialCard = ({ data, onDelete }: MemorialCardProps) => {
           className="w-35 h-35 rounded-full"
         />
       </div>
-      <div className="flex items-center justify-between w-full mt-12">
+      <div className="flex items-center justify-between gap-3 w-full mt-12">
         <h3 className="font-[Poppins] text-[20px] text-(--primary-color)">
-          {data.userDetail.firstName} {data.userDetail.lastName}
+          {data.userDetail.firstName} {data.userDetail.middleName}{" "}
+          {data.userDetail.lastName}
         </h3>
         <p className="bg-[#f5f5f5] text-[13px] font-[Poppins] text-(--secondary-color) px-2 py-1 rounded-md shadow-md">
           {data.isActive ? "Active" : "Inactive"}

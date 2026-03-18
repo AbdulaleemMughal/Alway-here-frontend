@@ -5,13 +5,49 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import type { MemorialType } from "../../@types/memorial.type";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/appStore";
+import { useMemorial } from "../../hook/useMemorial";
+import React, { useEffect, useState } from "react";
 
 interface UserDetailProps {
   data: MemorialType;
+  setData: React.Dispatch<React.SetStateAction<MemorialType>>;
 }
 
-export const UserDetail = ({ data }: UserDetailProps) => {
+export const UserDetail = ({ data, setData }: UserDetailProps) => {
   if (!data || !data.userDetail) return null;
+  const { updateMemorial } = useMemorial();
+  const [debouncedData, setDebouncedData] = useState<MemorialType>(data);
+
+  const fontWeight = useSelector(
+    (store: RootState) => store.memorial.fontWeight,
+  );
+  const textColor = useSelector((store: RootState) => store.memorial.textColor);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedData(data);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [data]);
+
+  useEffect(() => {
+    if (!debouncedData) return;
+
+    updateMemorial(debouncedData);
+  }, [debouncedData]);
+
+  const handleDataChange = (field: string, value: string) => {
+    setData((prev) => ({
+      ...prev,
+      userDetail: {
+        ...prev.userDetail,
+        [field]: value,
+      },
+    }));
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -35,25 +71,19 @@ export const UserDetail = ({ data }: UserDetailProps) => {
               type="text"
               value={data.userDetail.firstName}
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
+              onChange={(e) => handleDataChange("firstName", e.target.value)}
             />
             <Input
               type="text"
               value={data.userDetail.middleName}
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
+              onChange={(e) => handleDataChange("middleName", e.target.value)}
             />
             <Input
               type="text"
               value={data.userDetail.lastName}
               className="w-41.75 max-sm:w-full"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
+              onChange={(e) => handleDataChange("lastName", e.target.value)}
             />
           </div>
           <div className="flex items-center gap-2 mt-4 max-sm:w-full max-sm:flex-col">
@@ -68,6 +98,9 @@ export const UserDetail = ({ data }: UserDetailProps) => {
                   ? dayjs(data.userDetail.dateOfBirth)
                   : null
               }
+              onChange={(value) =>
+                handleDataChange("dateOfBirth", value?.toISOString() || "")
+              }
             />
             <span className="max-sm:hidden">-</span>
             <DatePicker
@@ -78,6 +111,9 @@ export const UserDetail = ({ data }: UserDetailProps) => {
                   ? dayjs(data.userDetail.dateOfExpiry)
                   : null
               }
+              onChange={(value) =>
+                handleDataChange("dateOfExpiry", value?.toISOString() || "")
+              }
             />
           </div>
           <div className="flex items-center gap-2 mt-2 max-sm:w-full">
@@ -86,9 +122,14 @@ export const UserDetail = ({ data }: UserDetailProps) => {
             </span>
             <input
               type="text"
+              style={{
+                fontWeight: fontWeight,
+                color: textColor,
+              }}
               className="py-1.5 px-3 w-full border border-gray-300 text-[16px] outline-none font-[Poppins] max-sm:text-[14px]"
               placeholder="Location"
               value={data.userDetail.location}
+              onChange={(e) => handleDataChange("location", e.target.value)}
             />
           </div>
         </div>

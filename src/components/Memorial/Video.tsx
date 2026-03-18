@@ -4,7 +4,6 @@ import { InputAndSwitch } from "../../shared/InputAndSwitch";
 import {
   type UpdateVideoPayload,
   type VideoType,
-  // type VideoTypeForUpload,
 } from "../../@types/video.type";
 import ReactPlayer from "react-player";
 import { FaTrash } from "react-icons/fa";

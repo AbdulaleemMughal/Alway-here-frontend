@@ -12,7 +12,7 @@ interface InputProps {
 export const Input = ({ type, className, value, onChange }: InputProps) => {
   const textColor = useSelector((store: RootState) => store.memorial.textColor);
   const fontWeight = useSelector(
-    (store: RootState) => store.memorial.fontWeigth,
+    (store: RootState) => store.memorial.fontWeight,
   );
 
   return (

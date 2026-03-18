@@ -15,7 +15,7 @@ export type MemorialType = {
   accentColor: string;
   backgroundColor: string;
   textColor: string;
-  fontWeigth: string;
+  fontWeight: string;
   isActive: boolean;
   userDetail: UserDetailType;
   _id: string;

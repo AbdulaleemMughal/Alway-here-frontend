@@ -7,6 +7,10 @@ import type { MemorialType } from "../@types/memorial.type";
 import { Loader } from "lucide-react";
 import { Header } from "../components/Memorial/Header";
 import { Video } from "../components/Memorial/Video";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/appStore";
+import { Timeline } from "../components/Memorial/Timeline";
+import { Favourite } from "../components/Memorial/Favourite";
 
 export const Memorial = () => {
   const { getMemorialById } = useMemorial();
@@ -14,6 +18,10 @@ export const Memorial = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [memorialData, setMemorialData] = useState<MemorialType>(
     {} as MemorialType,
+  );
+
+  const backgroundColor = useSelector(
+    (store: RootState) => store.memorial.backgroundColor,
   );
 
   useEffect(() => {
@@ -39,12 +47,12 @@ export const Memorial = () => {
   return (
     <div
       style={{
-        backgroundColor: memorialData.backgroundColor,
+        backgroundColor: backgroundColor,
       }}
     >
       <Banner data={memorialData} />
       <div className="relative bottom-16 flex justify-center">
-        <UserDetail data={memorialData} />
+        <UserDetail data={memorialData} setData={setMemorialData} />
       </div>
       <div>
         <Header />
@@ -52,6 +60,12 @@ export const Memorial = () => {
       <div className="mx-auto max-w-6xl max-lg:px-5">
         <section id="#videos">
           <Video />
+        </section>
+        <section id="#favourite">
+          <Favourite />
+        </section>
+        <section id="#timeline">
+          <Timeline />
         </section>
       </div>
     </div>

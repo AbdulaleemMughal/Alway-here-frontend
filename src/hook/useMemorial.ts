@@ -3,9 +3,14 @@ import { axiosInstance } from "../utils/axiosInstance";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { addMemorial } from "../store/memorialSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCallback } from "react";
+import type { MemorialType } from "../@types/memorial.type";
 
 export const useMemorial = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { memorialId } = useParams();
 
   const getMemorialById = async (id: string) => {
     try {
@@ -15,6 +20,7 @@ export const useMemorial = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast.error(err.response?.data.message);
+        navigate("/account");
       }
     }
   };
@@ -41,5 +47,20 @@ export const useMemorial = () => {
     }
   };
 
-  return { getMemorialById, getAllMemorials, deleteMemorial };
+  const updateMemorial = useCallback(async (data: MemorialType) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/api/memorial/${memorialId}`,
+        data,
+      );
+      dispatch(addMemorial(response.data.data));
+      toast.success(response.data.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data.message || "Error While Updating Data.");
+      }
+    }
+  }, []);
+
+  return { getMemorialById, getAllMemorials, deleteMemorial, updateMemorial };
 };

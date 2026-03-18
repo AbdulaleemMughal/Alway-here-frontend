@@ -4,6 +4,7 @@ import { Button } from "../UI/Button";
 import type { RootState } from "../store/appStore";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
+import { useState } from "react";
 
 interface ThemeCardProps {
   data: ThemeType;
@@ -11,6 +12,7 @@ interface ThemeCardProps {
 
 export const ThemeCard = ({ data }: ThemeCardProps) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
   const isUserLoggedIn = useSelector((store: RootState) => store.user.user);
 
   const handleMemorial = async (keyword: string) => {
@@ -18,13 +20,17 @@ export const ThemeCard = ({ data }: ThemeCardProps) => {
       alert("Please Login to continue");
       navigate("/login");
       return;
-    }
+    };
+
+    setLoading(true);
 
     const keywordToSendInApi = keyword.split(",")[0].trim();
 
     const response = await axiosInstance.post(
       `/api/add-memorial/${keywordToSendInApi}`,
-    );
+    ).finally(() =>{
+      setLoading(false);
+    });
 
     const url = `${window.location.origin}/memorial/${response.data.data._id}`;
     window.open(url, "_blank");
@@ -44,6 +50,7 @@ export const ThemeCard = ({ data }: ThemeCardProps) => {
             text="Use this design"
             onClick={() => handleMemorial(data.themeKeywords)}
             className="w-full"
+            disable={loading}
           />
         </div>
       </div>
