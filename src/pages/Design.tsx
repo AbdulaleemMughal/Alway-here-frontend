@@ -5,7 +5,7 @@ import type { ThemeType } from "../@types/theme.type";
 import { ThemeCard } from "../components/ThemeCard";
 import { Loader2 } from "lucide-react";
 
-export const Design = () => {
+const Design = () => {
   const { getTheme } = useTheme();
   const [loading, setLoading] = useState<boolean>(true);
   const [themes, setThemes] = useState<ThemeType[]>([]);
@@ -59,3 +59,5 @@ export const Design = () => {
     </>
   );
 };
+
+export default Design;

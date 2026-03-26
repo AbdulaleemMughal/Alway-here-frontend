@@ -5,7 +5,8 @@ import type { RootState } from "../../store/appStore";
 import type { FavouriteType } from "../../@types/favourite.type";
 import { useFavourite } from "../../hook/useFavourite";
 import debounce from "debounce";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface FavouriteCardProps {
   data: FavouriteType;
@@ -14,10 +15,10 @@ interface FavouriteCardProps {
 
 export const FavouriteCard = ({ data, setData }: FavouriteCardProps) => {
   const { deleteFavourite, updateFavourite } = useFavourite();
-  const pageColor = useSelector(
-    (store: RootState) => store.memorial.accentColor,
+  const [loading, setLoading] = useState<string>("");
+  const { accentColor, textColor } = useSelector(
+    (store: RootState) => store.memorial,
   );
-  const textColor = useSelector((store: RootState) => store.memorial.textColor);
   const firstName = useSelector(
     (store: RootState) => store.memorial.userDetail.firstName,
   );
@@ -51,7 +52,10 @@ export const FavouriteCard = ({ data, setData }: FavouriteCardProps) => {
   };
 
   const handleDelete = async (id: string) => {
-    const response = await deleteFavourite(id);
+    setLoading(id);
+    const response = await deleteFavourite(id).finally(() => {
+      setLoading("");
+    });
     setData(response);
   };
 
@@ -64,16 +68,24 @@ export const FavouriteCard = ({ data, setData }: FavouriteCardProps) => {
             className="col-span-4 px-5 py-6.25 flex flex-col shadow-(--shadow-lg) max-lg:col-span-6 max-sm:col-span-12"
           >
             <div className="flex justify-end mb-2.5">
-              <span
-                className="cursor-pointer"
-                onClick={() => handleDelete(fav._id)}
-              >
-                <SlTrash size={18} color="red" />
-              </span>
+              {loading === fav._id ? (
+                <Loader2
+                  size={18}
+                  color={accentColor}
+                  className="cursor-not-allowed"
+                />
+              ) : (
+                <SlTrash
+                  size={18}
+                  color={accentColor}
+                  onClick={() => handleDelete(fav._id)}
+                  className="cursor-pointer"
+                />
+              )}
             </div>
             <div className="flex items-center gap-2 mb-2">
               <span>
-                <LiaQuoteLeftSolid size={18} color={pageColor} />
+                <LiaQuoteLeftSolid size={18} color={accentColor} />
               </span>
               <input
                 type="text"

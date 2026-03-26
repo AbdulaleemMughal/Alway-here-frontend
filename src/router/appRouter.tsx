@@ -6,7 +6,6 @@ import { Main } from "../pages/Main";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { About } from "../pages/About";
-import { Design } from "../pages/Design";
 import { Contact } from "../pages/Contact";
 import { MemorialSite } from "../pages/MemorialSite";
 import { WriteObituary } from "../pages/WriteObituary";
@@ -15,11 +14,13 @@ import { MemorialFlower } from "../pages/MemorialFlower";
 import { FAQ } from "../pages/FAQ";
 import { Signup } from "../pages/Signup";
 import { ForgetPassword } from "../pages/ForgetPassword";
-import { Account } from "../pages/Account";
 import { UpdateProfile } from "../pages/UpdateProfile";
 import { Memorial } from "../pages/Memorial";
 import { Dashboard } from "../pages/Dashboard";
 import { LivePage } from "../pages/LivePage";
+import { lazy, Suspense } from "react";
+const Account = lazy(() => import("../pages/Account"));
+const Design = lazy(() => import("../pages/Design"));
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isLoggedInUser = useSelector((store: RootState) => store.user.user);
@@ -38,7 +39,14 @@ export const AppRouter = () => {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="about" element={<About />} />
-        <Route path="design" element={<Design />} />
+        <Route
+          path="design"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Design />
+            </Suspense>
+          }
+        />
         <Route path="contact" element={<Contact />} />
         <Route path="memorialsite" element={<MemorialSite />} />
         <Route path="write-obituary" element={<WriteObituary />} />
@@ -51,7 +59,9 @@ export const AppRouter = () => {
           path="account"
           element={
             <ProtectedRoute>
-              <Account />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Account />
+              </Suspense>
             </ProtectedRoute>
           }
         />

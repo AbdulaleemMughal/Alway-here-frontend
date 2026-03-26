@@ -17,6 +17,8 @@ export type MemorialType = {
   textColor: string;
   fontWeight: string;
   isActive: boolean;
+  totalVideos: number;
+  totalTimelines: number;
   userDetail: UserDetailType;
   _id: string;
 };

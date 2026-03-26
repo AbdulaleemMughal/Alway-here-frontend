@@ -8,6 +8,8 @@ const initialState: MemorialType = {
   textColor: "",
   fontWeight: "",
   isActive: false,
+  totalVideos: 0,
+  totalTimelines: 0,
   _id: "",
   userDetail: {
     coverImage: "",

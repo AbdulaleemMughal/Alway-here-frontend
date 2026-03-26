@@ -40,7 +40,10 @@ export const Dashboard = () => {
       <Header memorialData={memorialData} />
       <MemorialDetail memorialData={memorialData} />
       <ShareYourPage />
-      <Statistics />
+      <Statistics
+        totalVideos={memorialData.totalVideos}
+        totalTimelines={memorialData.totalTimelines}
+      />
     </>
   );
 };

@@ -1,6 +1,4 @@
 import { Box, Modal } from "@mui/material";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store/appStore";
 import { X } from "lucide-react";
 import QRCode from "react-qr-code";
 import { Button } from "../Button";
@@ -28,9 +26,6 @@ interface QrCodeModalProps {
 
 export const QrCodeModal = ({ link, open, setOpen }: QrCodeModalProps) => {
   const qrRef = useRef<HTMLDivElement | null>(null);
-  const accentColor = useSelector(
-    (store: RootState) => store.memorial.accentColor,
-  );
 
   const handleQrDownload = () => {
     const svg = qrRef.current?.querySelector("svg");
@@ -76,8 +71,7 @@ export const QrCodeModal = ({ link, open, setOpen }: QrCodeModalProps) => {
       <Box sx={style}>
         <div className="p-4 flex items-center justify-between border-b border-gray-300">
           <h1
-            className="text-2xl font-[Spectral]"
-            style={{ color: accentColor }}
+            className="text-2xl font-[Spectral] text-(--primary-color)"
           >
             Scan or Download your Qr Code.
           </h1>

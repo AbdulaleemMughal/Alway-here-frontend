@@ -8,7 +8,7 @@ import { useMemorial } from "../hook/useMemorial";
 import type { MemorialType } from "../@types/memorial.type";
 import { Loader } from "lucide-react";
 
-export const Account = () => {
+const Account = () => {
   const loggedInUser = useSelector((store: RootState) => store.user.user);
   const { getAllMemorials, deleteMemorial } = useMemorial();
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -67,7 +67,11 @@ export const Account = () => {
         >
           {allMemorials.map((memorial) => {
             return (
-              <MemorialCard key={memorial._id} data={memorial} onDelete={handleDeleteMemorial} />
+              <MemorialCard
+                key={memorial._id}
+                data={memorial}
+                onDelete={handleDeleteMemorial}
+              />
             );
           })}
         </div>
@@ -76,3 +80,5 @@ export const Account = () => {
     </>
   );
 };
+
+export default Account;

@@ -9,8 +9,10 @@ import ReactPlayer from "react-player";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "../../UI/Memorial/Button";
 import { AddVideoModal } from "../../UI/Modals/AddVideoModal";
+import { useParams } from "react-router-dom";
 
 export const Video = () => {
+  const { memorialId } = useParams();
   const { getAllVideos, deleteVideo, updateVideo } = useVideo();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [videos, setVideos] = useState<VideoType>({} as VideoType);
@@ -22,7 +24,7 @@ export const Video = () => {
     };
 
     fetchVideos();
-  }, [deleteVideo]);
+  }, [deleteVideo, memorialId]);
 
   const handleDelete = async (id: string) => {
     try {

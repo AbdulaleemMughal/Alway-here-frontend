@@ -1,0 +1,1 @@
+export const TINYMCE_KEY = import.meta.env.VITE_TINTMCE_KEY
