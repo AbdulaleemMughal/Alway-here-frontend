@@ -6,6 +6,7 @@ export type TimelineType = {
     heading: string;
     isActive: boolean;
     timeline: TimelineArray[];
+    __v: number;
 };
 
 export type TimelineArray = {
@@ -22,7 +23,7 @@ export type TimelinePayload = {
     isActive?: boolean;
     headline?: string;
     description?: string;
-    year: string;
+    year?: string;
     day?: string;
     month?: string;
 }

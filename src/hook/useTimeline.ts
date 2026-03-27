@@ -19,29 +19,32 @@ export const useTimeline = () => {
     }
   };
 
-  const updateTimeline = async (data: TimelinePayload, timelineId?: string) => {
-    if (!timelineId) {
-      try {
-        const response = await axiosInstance.patch(
-          `/api/update-timeline/${memorialId}`,
-          data,
-        );
-        toast.success(response.data.message);
-        return response.data.data;
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.error(err.response?.data.message);
-        }
-        throw err;
+  const createTimeline = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `/api/create-timeline/${memorialId}`,
+      );
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data.message);
       }
+      throw err;
     }
+  };
 
+  const updateTimeline = async (
+    data?: TimelinePayload,
+    timelineId?: string,
+  ) => {
     try {
       const response = await axiosInstance.patch(
         `/api/update-timeline/${memorialId}/${timelineId}`,
         data,
       );
-      toast.success(response.data.data);
+      toast.success(response.data.message);
+      console.log(response.data.data);
       return response.data.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -69,5 +72,6 @@ export const useTimeline = () => {
     getTimeline,
     updateTimeline,
     deleteTimeline,
+    createTimeline,
   };
 };
