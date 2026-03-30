@@ -11,7 +11,7 @@ export const MemorialDetail = ({ memorialData }: MemorialDetailProps) => {
   const { updateMemorial } = useMemorial();
 
   const handleStatus = async (value: string) => {
-    const statusisActive = value === "active" ? true : false;
+    const statusisActive = value === "active" ? false : true;
 
     try {
       await updateMemorial({ isActive: statusisActive } as MemorialType);

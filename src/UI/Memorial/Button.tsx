@@ -11,7 +11,7 @@ interface ButtonProps {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button = ({
@@ -41,14 +41,14 @@ export const Button = ({
       }}
     >
       {loading ? (
-  <Loader2 className="animate-spin" color={textColor} />
-) : (
-  <>
-    {startIcon && startIcon}
-    <span>{text}</span>
-    {endIcon && endIcon}
-  </>
-)}
+        <Loader2 className="animate-spin" color={textColor} />
+      ) : (
+        <>
+          {startIcon && startIcon}
+          <span>{text}</span>
+          {endIcon && endIcon}
+        </>
+      )}
     </button>
   );
 };

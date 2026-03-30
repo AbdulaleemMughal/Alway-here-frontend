@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/appStore";
 import { useMemorial } from "../../hook/useMemorial";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface UserDetailProps {
   data: MemorialType;
@@ -17,7 +17,8 @@ interface UserDetailProps {
 
 export const UserDetail = ({ data, setData }: UserDetailProps) => {
   if (!data || !data.userDetail) return null;
-  const { updateMemorial } = useMemorial();
+  const { profileImage, updateMemorial, updateMemorialImage } = useMemorial();
+  const profileImageRef = useRef<HTMLInputElement | null>(null);
   const [debouncedData, setDebouncedData] = useState<MemorialType>(data);
 
   const fontWeight = useSelector(
@@ -49,19 +50,42 @@ export const UserDetail = ({ data, setData }: UserDetailProps) => {
     }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      updateMemorialImage(formData);
+    }
+    e.target.value = "";
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="flex items-end gap-16 max-lg:flex-col max-lg:items-center max-lg:gap-10">
         <div className="relative bg-white h-75 w-75 flex justify-center items-center max-sm:w-70 max-sm:h-70">
           <img
             className="h-72.5 w-72.5 object-cover shadow-(--shadow-sm) max-sm:w-67.5 max-sm:h-67.5"
-            src={data.userDetail.profileImage}
+            src={profileImage ? profileImage : data.userDetail.profileImage}
           />
           <div className="absolute bottom-0 right-0 p-3">
             <Button
               text="Change Image"
-              onClick={() => {}}
+              onClick={() => {
+                if (profileImageRef.current) {
+                  profileImageRef.current.click();
+                }
+              }}
               startIcon={<Image size={16} strokeWidth={1} />}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              ref={profileImageRef}
+              className="hidden"
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
             />
           </div>
         </div>
