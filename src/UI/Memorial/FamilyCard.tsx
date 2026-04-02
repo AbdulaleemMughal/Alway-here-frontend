@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/appStore";
 import type { BranchType } from "../../@types/familyTree.type";

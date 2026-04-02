@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { addMemorial } from "../store/memorialSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import type { MemorialType } from "../@types/memorial.type";
 
 export const useMemorial = () => {

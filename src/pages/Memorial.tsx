@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
 import { Timeline } from "../components/Memorial/Timeline";
 import { Favourite } from "../components/Memorial/Favourite";
-import { Obituary } from "../components/Memorial/Obituary";
+// import { Obituary } from "../components/Memorial/Obituary";
 import { FamilyTree } from "../components/Memorial/FamilyTree";
 
 export const Memorial = () => {
