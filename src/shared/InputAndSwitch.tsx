@@ -46,7 +46,7 @@ export const InputAndSwitch = <
           console.error(err);
         }
       }, 500),
-    [], 
+    [],
   );
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const InputAndSwitch = <
         <Input
           className="w-60 text-[32px] mb-2.5"
           value={data?.heading}
-          onChange={handleHeadingChange} 
+          onChange={handleHeadingChange}
         />
         <div
           className="w-15 h-0.75"
@@ -96,7 +96,7 @@ export const InputAndSwitch = <
           className="text-[16px] font-[Poppins] font-medium"
           style={{ color: pageColor }}
         >
-          Enable
+          {data?.isActive ? "Disable" : "Enable"}
         </p>
       </div>
     </div>

@@ -51,17 +51,19 @@ const navItems = [
 ];
 
 export const Header = () => {
-  const pageColor = useSelector(
-    (store: RootState) => store.memorial.accentColor,
-  );
-  const textColor = useSelector((store: RootState) => store.memorial.textColor);
-  const fontWeight = useSelector(
-    (store: RootState) => store.memorial.fontWeight,
+  const { accentColor, textColor, fontWeight } = useSelector(
+    (store: RootState) => store.memorial,
   );
 
   return (
     <div className="shadow-(--shadow-lg) top-0">
-      <div className="mx-auto py-3 max-w-6xl flex items-center justify-between overflow-x-auto whitespace-nowrap flex-nowrap">
+      <div
+        className="mx-auto py-3 max-w-6xl flex items-center justify-between overflow-x-auto whitespace-nowrap flex-nowrap"
+        style={{
+          scrollbarColor: accentColor + " transparent",
+          scrollbarWidth: "thin",
+        }}
+      >
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -71,7 +73,7 @@ export const Header = () => {
               className="py-2.5 px-3.75 flex items-center gap-2 cursor-pointer"
             >
               <span>
-                <Icon color={pageColor} size={19} strokeWidth={1.5} />
+                <Icon color={accentColor} size={19} strokeWidth={1.5} />
               </span>
               <p
                 className={`text-[16px] font-[Poppins]`}

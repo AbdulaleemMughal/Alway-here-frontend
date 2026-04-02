@@ -12,6 +12,7 @@ import type { RootState } from "../store/appStore";
 import { Timeline } from "../components/Memorial/Timeline";
 import { Favourite } from "../components/Memorial/Favourite";
 import { Obituary } from "../components/Memorial/Obituary";
+import { FamilyTree } from "../components/Memorial/FamilyTree";
 
 export const Memorial = () => {
   const { getMemorialById } = useMemorial();
@@ -21,8 +22,8 @@ export const Memorial = () => {
     {} as MemorialType,
   );
 
-  const backgroundColor = useSelector(
-    (store: RootState) => store.memorial.backgroundColor,
+  const { backgroundColor, accentColor } = useSelector(
+    (store: RootState) => store.memorial,
   );
 
   useEffect(() => {
@@ -49,6 +50,8 @@ export const Memorial = () => {
     <div
       style={{
         backgroundColor: backgroundColor,
+        scrollbarColor: accentColor + " transparent",
+        scrollbarWidth: "thin",
       }}
     >
       <Banner data={memorialData} />
@@ -70,6 +73,9 @@ export const Memorial = () => {
         </section> */}
         <section id="#timeline">
           <Timeline />
+        </section>
+        <section id="#familytree">
+          <FamilyTree />
         </section>
       </div>
     </div>
