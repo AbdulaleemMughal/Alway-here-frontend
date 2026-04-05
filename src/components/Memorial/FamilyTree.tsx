@@ -32,13 +32,13 @@ export const FamilyTree = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await updateFamilyTree(duplicateData);
-  //     setFamilyData(response);
-  //   })();
-  // }, [duplicateData]);
+  useEffect(() => {
+    if (!duplicateData) return;
 
+    updateFamilyTree({ treeData: duplicateData }).then((res) => {
+      setFamilyData(res);
+    });
+  }, [duplicateData]);
   return (
     <>
       <InputAndSwitch<FamilyTreeType, FamilyTreeType>
@@ -58,7 +58,13 @@ export const FamilyTree = () => {
             <div className="flex justify-between items-center whitespace-nowrap">
               <div className="flex items-center">
                 <div className="flex items-center">
-                  <FamilyCard data={familyData.treeData.f_grandFather} />
+                  <FamilyCard
+                    flag="f_grandFather"
+                    data={familyData.treeData.f_grandFather}
+                    duplicateData={duplicateData}
+                    setDuplicateData={setDuplicateData}
+                    setResponse={setFamilyData}
+                  />
                   <div
                     className="w-18.75 h-0.5"
                     style={{
@@ -85,12 +91,24 @@ export const FamilyTree = () => {
                       backgroundColor: accentColor,
                     }}
                   ></div>
-                  <FamilyCard data={familyData.treeData.m_grandMother} />
+                  <FamilyCard
+                    flag="f_grandMother"
+                    data={familyData.treeData.f_grandMother}
+                    duplicateData={duplicateData}
+                    setDuplicateData={setDuplicateData}
+                    setResponse={setFamilyData}
+                  />
                 </div>
               </div>
               <div className="flex items-center">
                 <div className="flex items-center">
-                  <FamilyCard data={familyData.treeData.m_grandFather} />
+                  <FamilyCard
+                    flag="m_grandFather"
+                    data={familyData.treeData.m_grandFather}
+                    duplicateData={duplicateData}
+                    setDuplicateData={setDuplicateData}
+                    setResponse={setFamilyData}
+                  />
                   <div
                     className="w-18.75 h-0.5"
                     style={{
@@ -117,13 +135,25 @@ export const FamilyTree = () => {
                       backgroundColor: accentColor,
                     }}
                   ></div>
-                  <FamilyCard data={familyData.treeData.m_grandMother} />
+                  <FamilyCard
+                    flag="m_grandFather"
+                    data={familyData.treeData.m_grandMother}
+                    duplicateData={duplicateData}
+                    setDuplicateData={setDuplicateData}
+                    setResponse={setFamilyData}
+                  />
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-center mt-11.5">
               <div className="flex items-center">
-                <FamilyCard data={familyData.treeData.father} />
+                <FamilyCard
+                  flag="father"
+                  data={familyData.treeData.father}
+                  duplicateData={duplicateData}
+                  setDuplicateData={setDuplicateData}
+                  setResponse={setFamilyData}
+                />
                 <div
                   className="w-55.5 h-0.5"
                   style={{
@@ -150,7 +180,13 @@ export const FamilyTree = () => {
                     backgroundColor: accentColor,
                   }}
                 ></div>
-                <FamilyCard data={familyData.treeData.mother} />
+                <FamilyCard
+                  flag="mother"
+                  data={familyData.treeData.mother}
+                  duplicateData={duplicateData}
+                  setDuplicateData={setDuplicateData}
+                  setResponse={setFamilyData}
+                />
               </div>
             </div>
             <div className="flex items-center justify-center mt-7 relative">
@@ -192,7 +228,16 @@ export const FamilyTree = () => {
                     }}
                   >
                     {familyData.treeData.wifes.map((wife) => {
-                      return <FamilyCard key={wife?._id} data={wife} />;
+                      return (
+                        <FamilyCard
+                          flag="wifes"
+                          key={wife?._id}
+                          data={wife}
+                          duplicateData={duplicateData}
+                          setDuplicateData={setDuplicateData}
+                          setResponse={setFamilyData}
+                        />
+                      );
                     })}
                     <AddChildrenCard
                       onClick={async () => {
@@ -240,7 +285,16 @@ export const FamilyTree = () => {
                     }}
                   >
                     {familyData.treeData.siblings.map((sibling) => {
-                      return <FamilyCard key={sibling?._id} data={sibling} />;
+                      return (
+                        <FamilyCard
+                          key={sibling?._id}
+                          flag="siblings"
+                          data={sibling}
+                          duplicateData={duplicateData}
+                          setDuplicateData={setDuplicateData}
+                          setResponse={setFamilyData}
+                        />
+                      );
                     })}
                     <AddChildrenCard
                       onClick={async () => {
@@ -278,7 +332,16 @@ export const FamilyTree = () => {
                 }}
               >
                 {familyData.treeData.children.map((child) => {
-                  return <FamilyCard key={child?._id} data={child} />;
+                  return (
+                    <FamilyCard
+                      key={child?._id}
+                      flag="children"
+                      data={child}
+                      duplicateData={duplicateData}
+                      setDuplicateData={setDuplicateData}
+                      setResponse={setFamilyData}
+                    />
+                  );
                 })}
                 <AddChildrenCard
                   onClick={async () => {

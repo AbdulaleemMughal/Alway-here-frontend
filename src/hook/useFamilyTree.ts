@@ -25,6 +25,7 @@ export const useFamilyTree = () => {
 
   const updateFamilyTree = useCallback(
     async (data: FamilyTreeType | { treeData: TreeDataType }) => {
+      console.log("Updating family tree with data:", data);
       try {
         const response = await axiosInstance.patch(
           `/api/update-familyTree/${memorialId}`,

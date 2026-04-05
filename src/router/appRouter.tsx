@@ -19,7 +19,7 @@ import { Memorial } from "../pages/Memorial";
 import { Dashboard } from "../pages/Dashboard";
 import { LivePage } from "../pages/LivePage";
 import { lazy, Suspense } from "react";
-const Account = lazy(() => import("../pages/Account"));
+import Account from "../pages/Account";
 const Design = lazy(() => import("../pages/Design"));
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -59,9 +59,7 @@ export const AppRouter = () => {
           path="account"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<div>Loading...</div>}>
                 <Account />
-              </Suspense>
             </ProtectedRoute>
           }
         />

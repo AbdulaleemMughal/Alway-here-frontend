@@ -9,21 +9,21 @@ export type FamilyTreeType = {
 };
 
 export type TreeDataType = {
-  children: BranchType[] | [];
+  children: BranchType[];
   f_grandFather: BranchType | null;
   f_grandMother: BranchType | null;
   father: BranchType | null;
-  siblings: BranchType[] | [];
+  siblings: BranchType[];
   m_grandFather: BranchType | null;
   m_grandMother: BranchType | null;
   mother: BranchType | null;
-  wifes: BranchType[] | [];
+  wifes: BranchType[];
 };
 
 export type BranchType = {
   _id?: string;
   name: string;
-  img: string;
+  img?: string;
 };
 
 export type UpdateFamilyTreePayload = {

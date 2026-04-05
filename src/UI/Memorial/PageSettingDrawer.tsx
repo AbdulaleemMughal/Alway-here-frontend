@@ -237,8 +237,13 @@ export const PageSettingDrawer = ({
   useClickOutside(dropdownRef, () => setOpenIndex(null));
 
   return (
-    <Drawer open={open} anchor="left" onClose={() => setOpen(false)}>
-      <Box sx={{ width: 410, height: "100vh" }}>
+    <Drawer
+      sx={{ zIndex: 9999999 }}
+      open={open}
+      anchor="left"
+      onClose={() => setOpen(false)}
+    >
+      <Box sx={{ width: 350, height: "100vh" }}>
         <div className="flex flex-col h-full">
           <div className="p-4 flex items-center justify-between">
             <div>
